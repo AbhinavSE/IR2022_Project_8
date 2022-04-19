@@ -4,19 +4,20 @@ from utils.constants import PATHS
 navbar = dbc.NavbarSimple(
     className='sticky-top',
     children=[
-        dbc.NavItem(dbc.NavLink("Home", href=PATHS['index'])),
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("News", href='#'),
-                dbc.DropdownMenuItem("Tags", href='#'),
-                dbc.DropdownMenuItem("Trends", href='#'),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Aggregate",
-        ),
+        dbc.NavItem(dbc.NavLink("Music", href=PATHS['index'])),
+        dbc.NavItem(dbc.NavLink("Recommendations", href=PATHS['index'])),
+        # dbc.DropdownMenu(
+        #     # children=[
+        #     #     dbc.DropdownMenuItem("News", href='#'),
+        #     #     dbc.DropdownMenuItem("Tags", href='#'),
+        #     #     dbc.DropdownMenuItem("Trends", href='#'),
+        #     # ],
+        #     nav=True,
+        #     in_navbar=True,
+        #     label="",
+        # ),
     ],
-    brand="Music Recommender",
+    brand="RECOM",
     brand_href="#",
     color="primary",
     dark=True,
