@@ -6,16 +6,6 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Music", href=PATHS['index'])),
         dbc.NavItem(dbc.NavLink("Recommendations", href=PATHS['index'])),
-        # dbc.DropdownMenu(
-        #     # children=[
-        #     #     dbc.DropdownMenuItem("News", href='#'),
-        #     #     dbc.DropdownMenuItem("Tags", href='#'),
-        #     #     dbc.DropdownMenuItem("Trends", href='#'),
-        #     # ],
-        #     nav=True,
-        #     in_navbar=True,
-        #     label="",
-        # ),
     ],
     brand="RECOM",
     brand_href="#",
