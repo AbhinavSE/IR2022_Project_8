@@ -9,4 +9,4 @@ layout = html.Div([
     dcc.Location(id="url"),
     navbar,
     content,
-], style={"zoom": "75%"})
+], style={"zoom": "75%", "background-color": "black"})

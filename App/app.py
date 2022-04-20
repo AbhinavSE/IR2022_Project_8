@@ -7,5 +7,5 @@ server = Flask(__name__, static_folder=os.path.join(os.getcwd(), 'assets'))
 
 app = dash.Dash(__name__,
                 server=server,
-                external_stylesheets=[dbc.themes.SLATE])
+                external_stylesheets=[dbc.themes.LUX])
 app.config.suppress_callback_exceptions = True
