@@ -9,4 +9,5 @@ layout = html.Div([
     dcc.Location(id="url"),
     navbar,
     content,
-], style={"zoom": "75%", "background-color": "black"})
+# background color: black
+], style={"zoom": "75%", "background-image": "linear-gradient(to bottom right, #2b0980, #8069b8)"})
