@@ -24,6 +24,6 @@ layout = html.Div([
     html.Div([
         # center
         dbc.Pagination(max_value=10, fully_expanded=False),
-    ], style={'width': '80%', 'margin': 'auto', 'height': '50px'},
+    ], style={'width': '20%', 'margin': 'auto', 'height': '50px'},
     ),
 ])
