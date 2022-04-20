@@ -44,7 +44,7 @@ def search_bar():
                         # text-input
                         dbc.Input(id='search-button', type='text', className='form-control', placeholder='Search...',
                                   style={'background-color': '#1d1d1d', 'color': 'white', 'border': '1px solid black', 'borderRadius': '15px', 'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'}),
-                    ]
+                    ], size='md'
                     )
                 ]
             )

@@ -12,7 +12,7 @@ def get_carousel(items):
     for i in range(len(items)):
         items[i]['key'] = i + 1
     # adjust size with black bars on the sides with 50% of the width
-    
+
     return dbc.Row([
         dbc.Col(
             dbc.Carousel(
@@ -21,7 +21,7 @@ def get_carousel(items):
                 indicators=True,
                 controls=True,
                 interval=2000,
-                style={'width': '50%', 'margin': 'auto'}
+                style={'width': '60%', 'margin': 'auto'}
             ), width=8
         )
-    ], justify='center', style={'background-color': '#1d1d1d'})
+    ], justify='center', style={'background-color': '#161617'})
