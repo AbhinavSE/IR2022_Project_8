@@ -3,8 +3,8 @@ from dash import html
 from dash.dependencies import Input, Output
 from app import app
 from utils.constants import PATHS
-import index
-# from pages.logs import logs
+from pages.music import music
+from pages.about import about
 
 
 @app.callback(
@@ -12,8 +12,10 @@ import index
     Input("url", "pathname")
 )
 def render_page_content(pathname):
-    if pathname == PATHS['index']:
-        return index.layout
+    if pathname == PATHS['music']:
+        return music.layout
+    elif pathname == PATHS['about']:
+        return about.layout
 
     return html.Div(
         [

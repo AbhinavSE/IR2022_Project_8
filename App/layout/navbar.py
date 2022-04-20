@@ -4,8 +4,8 @@ from utils.constants import PATHS
 navbar = dbc.NavbarSimple(
     className='sticky-top',
     children=[
-        dbc.NavItem(dbc.NavLink("Music", href=PATHS['index'])),
-        dbc.NavItem(dbc.NavLink("Recommendations", href=PATHS['index'])),
+        dbc.NavItem(dbc.NavLink("Music", href=PATHS['music'])),
+        dbc.NavItem(dbc.NavLink("About", href=PATHS['about'])),
     ],
     brand="RECOM",
     brand_href="#",

@@ -1,5 +1,6 @@
 PATHS = {
-    'index': '/dev/',
+    'music': '/',
+    'about': '/about',
 }
 
 SIDEBAR_STYLE = {
