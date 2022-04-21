@@ -1,8 +1,10 @@
+from app import app
 from dash import html
+from dash.dependencies import Input, Output, State
 from components.carousel import get_carousel
 import dash_bootstrap_components as dbc
 from utils.data import load_music
-from components.cards import get_card
+from components.cards import get_music_card
 
 
 def get_recommended_songs_carousel():
@@ -21,16 +23,22 @@ def get_recommended_songs_carousel():
     return get_carousel(items)
 
 
-def music_cards():
+def music_cards(page, likes_status):
+    page = 0 if not page else page - 1
     music = load_music()
     cards = []
-    for i in range(0, len(music), 5):
+    card_i = 0
+    for i in range(page * 15, (page + 1) * 15, 5):
+        length = min(len(music), i + 5) - i
         cards.append(
             dbc.Row(
-                [dbc.Col([get_card(music[i]['Title'], music[i]['Artist'], music[i]['image_folder'], '#')]) for i in range(i, min(len(music), i + 5))]
+                [dbc.Col([get_music_card(i=c, song_id=j, title=music[j]['Title'], artist=music[j]['Artist'], img_loc=music[j]['image_folder'], like=(str(j) in likes_status))])
+                 for c, j in zip(range(card_i, card_i + length), range(i, min(len(music), i + 5)))]
             )
         )
         cards.append(html.Br())
+        card_i += length
+
     return cards
 
 
