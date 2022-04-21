@@ -6,7 +6,7 @@ from utils.caching import cache, TIMEOUT
 
 @cache.memoize(timeout=TIMEOUT)
 def load_music():
-    music_df = pd.read_csv('assets/data/metadata.csv')
+    music_df = pd.read_csv('assets/data/metadata_temp.csv')
     music_df['image_folder'] = music_df['image_folder'].apply(lambda x: 'assets/data' + x if type(x) == str else x)
     # music = [
     #     {'artist': 'Gym Class Heroes', 'song': 'Stereo Hearts', 'album': 'Stereo Hearts', 'img': 'assets/album_covers/stereo_hearts.jpeg'},
