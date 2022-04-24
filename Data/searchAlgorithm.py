@@ -64,23 +64,28 @@ class Search:
 
 		pprint(self.grams)
 
+	def searchType(self, searchWord):
+		r = re.compile('.*' + searchWord)
+
+		if len(searchWord) == 1:
+			result = self.grams['uni'].get(searchWord, [])
+		elif len(searchWord) == 2:
+			result = self.grams['bi'].get(searchWord, [])
+		elif len(searchWord) == 3:
+			result = self.grams['tri'].get(searchWord, [])
+		else:
+			result = list(filter(r.match, self.grams['tri'].get(searchWord[:3], [])))
+
+		return result
+
 	def searchSong(self, searchString):
 		searchString = searchString.lower()
-		r = re.compile('.*' + searchString)
 
-		if len(searchString) == 1:
-			result = self.grams['uni'].get(searchString, [])
-		elif len(searchString) == 2:
-			result = self.grams['bi'].get(searchString, [])
-		elif len(searchString) == 3:
-			result = self.grams['tri'].get(searchString, [])
-		else:
-			result = list(filter(r.match, self.grams['tri'].get(searchString[:3], [])))
+		result = self.searchType(searchString)
 
 		if not result:
-			if len(searchString.split()) > 1:
-				for words in searchString.split():
-					result += list(filter(r.match, self.grams['tri'].get(searchString[:3], [])))
+			for words in searchString.split():
+				result += self.searchType(words)
 		
 
 		finalResult = []
@@ -101,7 +106,7 @@ if __name__ == '__main__':
 		json.dump(s.map, outfile)
 
 	startTime = time.time()
-	print(s.searchSong('cha'))
+	print(s.searchSong('ed '))
 	print(time.time() - startTime)
 
 
