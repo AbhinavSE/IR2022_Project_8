@@ -68,7 +68,7 @@ layout = html.Div([
                                 html.Audio(
                                     id='music-player-audio',
                                     src='assets/music/music.mp3', controls=True,
-                                    autoPlay=True,
+                                    # autoPlay=True,
                                     style={'width': '80%', 'border': '1px solid black', 'borderRadius': '15px',
                                            'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'
                                            }

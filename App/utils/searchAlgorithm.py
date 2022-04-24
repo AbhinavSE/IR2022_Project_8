@@ -7,7 +7,7 @@ import json
 
 
 class Search:
-    METADATA_LOC = 'assets/data/metadata_temp.csv'
+    METADATA_LOC = 'assets/data/metadata.csv'
 
     def __init__(self):
         self.grams = {
@@ -45,7 +45,7 @@ class Search:
         return valueSet
 
     def initGrams(self):
-        dataset = pd.read_csv(METADATA_LOC)
+        dataset = pd.read_csv(self.METADATA_LOC, encoding='latin-1')
 
         titles = self.getValues(dataset['Title'].values.tolist())
         albums = self.getValues(dataset['Album'].values.tolist())

@@ -50,5 +50,6 @@ def get_music_card(i, song_id, title, artist, img_loc, like):
         style={"width": "100%", "height": "100%",
                "background-color": "#1d1d1d", "color": "white", 'border': '1px solid black',
                'borderRadius': '15px',
-               'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'},
+               'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000',
+               'display': ('none' if song_id == 'None' else 'block')}
     )
