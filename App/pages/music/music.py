@@ -24,7 +24,7 @@ layout = html.Div([
     # Pagination
     html.Div([
         # center
-        dbc.Pagination(id='music-pagination', max_value=len(load_music()) // 15, fully_expanded=False),
+        dbc.Pagination(id='music-pagination', max_value=24, fully_expanded=False),
     ], style={'width': '20%', 'margin': 'auto', 'height': '50px'},
     ),
     html.Br(),
@@ -66,6 +66,7 @@ layout = html.Div([
                             [
                                 # Audio player centered and slightly thicker
                                 html.Audio(
+                                    id='music-player',
                                     src='assets/music/music.mp3', controls=True,
                                     style={'width': '80%', 'border': '1px solid black', 'borderRadius': '15px',
                                            'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'

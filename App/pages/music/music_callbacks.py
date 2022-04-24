@@ -41,3 +41,26 @@ def update_likes(likes, song_ids):
 )
 def pagination(page):
     return music_cards(page, get_likes())
+
+# Play selected music
+
+
+@app.callback(
+    output=Output('music-player', 'src'),
+    inputs=dict(likes=[Input(f'music-card-{i}-play-btn', 'n_clicks') for i in range(15)]),
+    state=dict(song_ids=[State(f'music-card-{i}-song-id', 'children') for i in range(15)]),
+    prevent_initial_call=True,
+)
+def play_music(likes, song_ids):
+    """
+    Plays the selected music.
+    """
+    # Get the ctx trigger
+    ctx = dash.callback_context
+    # Get the button that was clicked
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    button_id = re.search(r'\d+', button_id).group()
+    song_id = song_ids[int(button_id)]
+    music = load_music()
+    print(music[song_id]['music_folder'])
+    return music[song_id]['music_folder']
