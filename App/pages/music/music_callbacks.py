@@ -3,8 +3,8 @@ from app import app
 import dash
 from dash import html
 from dash.dependencies import Input, Output, State
-from pages.music.music_helper import music_cards
-from utils.data import get_likes, load_music, set_likes
+from pages.music.music_helper import getMusicCards
+from utils.data import getLikes, load_music, setLikes, getSearchObject
 
 # Like button callbacks
 
@@ -15,7 +15,7 @@ from utils.data import get_likes, load_music, set_likes
     state=dict(song_ids=[State(f'music-card-{i}-song-id', 'children') for i in range(15)]),
     prevent_initial_call=True,
 )
-def update_likes(likes, song_ids):
+def updateLikesCallback(likes, song_ids):
     """
     Updates the like button.
     """
@@ -25,19 +25,64 @@ def update_likes(likes, song_ids):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     button_id = re.search(r'\d+', button_id).group()
     song_id = song_ids[int(button_id)]
-    likes_status = get_likes()
+    likes_status = getLikes()
     if str(song_id) in likes_status:
         del likes_status[str(song_id)]
     else:
         likes_status[str(song_id)] = 1
-    set_likes(likes_status)
+    setLikes(likes_status)
     return ["❤️" if str(i) in likes_status else "🤍" for i in song_ids]
 
 
 # Pagination callback
 @app.callback(
     Output('music-cards', 'children'),
-    [Input('music-pagination', 'active_page')],
+    [Input('music-pagination', 'active_page'),
+     Input('music-search-text', 'value'), Input('music-search-type', 'value')],
 )
-def pagination(page):
-    return music_cards(page, get_likes())
+def paginationCallback(page, text, search_type):
+    trigger = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
+    music = []
+    print(trigger)
+    if (trigger == 'music-search-text' or trigger == 'music-search-type') and text != '':
+        print('Text', text)
+        searchObj = getSearchObject()
+        res = searchObj.searchSong(text)
+        songs = [r[0] for r in res if r[1] == search_type]
+        songs = [searchObj.map[r] for r in songs]
+        music = load_music()
+        music = [music[i] for s in songs for i in s]
+        print(music)
+    else:
+        pageSize = 15
+        music = load_music()
+        page = 0 if page is None else page
+        music = [music[i] for i in range(page * pageSize, (page + 1) * pageSize)]
+    print(len(music))
+    return getMusicCards(music)
+
+
+# Play selected music
+@app.callback(
+    output=[Output('music-player-audio', 'src'), Output('music-player-title', 'children'),
+            Output('music-player-artist', 'children'), Output('music-player-cover-img', 'src')],
+    inputs=dict(likes=[Input(f'music-card-{i}-play-btn', 'n_clicks') for i in range(15)]),
+    state=dict(song_ids=[State(f'music-card-{i}-song-id', 'children') for i in range(15)]),
+    prevent_initial_call=True,
+)
+def playMusicCallback(likes, song_ids):
+    """
+    Plays the selected music.
+    """
+    # Get the ctx trigger
+    ctx = dash.callback_context
+    # Get the button that was clicked
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    button_id = re.search(r'\d+', button_id).group()
+    song_id = song_ids[int(button_id)]
+    music = load_music()
+    audio = music[song_id]['music_folder']
+    title = music[song_id]['Title']
+    artist = music[song_id]['Artist']
+    cover = music[song_id]['image_folder']
+    return [audio, title, artist, cover]
