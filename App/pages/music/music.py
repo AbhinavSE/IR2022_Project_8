@@ -42,14 +42,14 @@ layout = html.Div([
             dbc.Row([
                 # small width
                 dbc.Col([
-                    html.Img(src='assets/album_covers/faded.jpg', style={'width': '100px'}),
+                    html.Img(id='music-player-cover-img', src='assets/album_covers/faded.jpg', style={'width': '100px'}),
                 ], width=2, style={'text-align': 'right'}),
                 dbc.Col([
                     dbc.Row(
                         dbc.Col(
                             [
                                 # Bold Title, align to left
-                                html.H4('Faded', style={'color': 'white', 'font-weight': 'bold'}),
+                                html.H4(id='music-player-title', style={'color': 'white', 'font-weight': 'bold'}),
                             ]
                         )
                     ),
@@ -57,7 +57,7 @@ layout = html.Div([
                         dbc.Col(
                             [
                                 # italic
-                                html.P('~ Alan Walker', style={'color': 'white', 'font-style': 'italic'}),
+                                html.P(id='music-player-artist', style={'color': 'white', 'font-style': 'italic'}),
                             ]
                         )
                     ),
@@ -66,8 +66,9 @@ layout = html.Div([
                             [
                                 # Audio player centered and slightly thicker
                                 html.Audio(
-                                    id='music-player',
+                                    id='music-player-audio',
                                     src='assets/music/music.mp3', controls=True,
+                                    autoPlay=True,
                                     style={'width': '80%', 'border': '1px solid black', 'borderRadius': '15px',
                                            'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'
                                            }

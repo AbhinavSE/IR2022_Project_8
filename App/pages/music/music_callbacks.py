@@ -46,7 +46,8 @@ def pagination(page):
 
 
 @app.callback(
-    output=Output('music-player', 'src'),
+    output=[Output('music-player-audio', 'src'), Output('music-player-title', 'children'),
+            Output('music-player-artist', 'children'), Output('music-player-cover-img', 'src')],
     inputs=dict(likes=[Input(f'music-card-{i}-play-btn', 'n_clicks') for i in range(15)]),
     state=dict(song_ids=[State(f'music-card-{i}-song-id', 'children') for i in range(15)]),
     prevent_initial_call=True,
@@ -62,5 +63,8 @@ def play_music(likes, song_ids):
     button_id = re.search(r'\d+', button_id).group()
     song_id = song_ids[int(button_id)]
     music = load_music()
-    print(music[song_id]['music_folder'])
-    return music[song_id]['music_folder']
+    audio = music[song_id]['music_folder']
+    title = music[song_id]['Title']
+    artist = music[song_id]['Artist']
+    cover = music[song_id]['image_folder']
+    return [audio, title, artist, cover]

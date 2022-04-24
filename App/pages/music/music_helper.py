@@ -8,18 +8,27 @@ from components.cards import get_music_card
 
 
 def get_recommended_songs_carousel():
-    items = [
-        {
-            'src': 'assets/album_covers/stereo_hearts.jpeg',
-            'header': 'Stereo Hearts',
-            'caption': '~Gym Class Heroes',
-        },
-        {
-            'src': 'assets/album_covers/faded.jpg',
-            'header': 'Faded',
-            'caption': '~Alan Walker',
-        }
-    ]
+    def recommended_songs():
+        music = load_music()
+        items = []
+        for song in music:
+            items.append({'src': song['image_folder'], 'title': song['Title'], 'artist': song['Artist']})
+        return items
+        # item = [
+        #     {
+        #         'src': 'assets/album_covers/stereo_hearts.jpeg',
+        #         'header': 'Stereo Hearts',
+        #         'caption': '~Gym Class Heroes',
+        #     },
+        #     {
+        #         'src': 'assets/album_covers/faded.jpg',
+        #         'header': 'Faded',
+        #         'caption': '~Alan Walker',
+        #     }
+        # ]
+        # return item
+
+    items = recommended_songs()
     return get_carousel(items)
 
 
