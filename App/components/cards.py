@@ -8,11 +8,12 @@ def get_music_card(i, song_id, title, artist, img_loc, like):
     """
     i, title, artist, img_loc of card
     """
+
     return dbc.Card(id=f'music-card-{i}', children=[
         dbc.CardImg(src=img_loc, top=True),
         # Show only on hover
         dbc.CardBody([
-            html.H4(title[:30] + ('...' if len(title) > 30 else ''), className="card-title"),
+            html.H4(title[:15] + ('...' if len(title) > 15 else ''), className="card-title"),
             html.P(
                 artist,
                 className="card-text",
@@ -33,10 +34,12 @@ def get_music_card(i, song_id, title, artist, img_loc, like):
                 dbc.Col(
                     dbc.Button(
                         id=f"music-card-{i}-play-btn",
-                        children="▶️",
+                        children="▶ Play",
                         color="primary",
-                        style={'background-color': '#005555', 'color': 'white', 'borderRadius': '15px',
-                               'overflow': 'hidden', 'background-color': "#1d1d1d", "font-size": "1.5rem", "padding": "0.5rem"}
+                        # Rounded Border with green background and white text
+                        style={'background-color': '#005555', 'color': 'white', 'borderRadius': '10px',
+                               'overflow': 'hidden', 'background-color': "green", "font-size": "1.2rem", "padding": "0.5rem",
+                               'position': 'relative', 'top': '50%', 'transform': 'translateY(-50%)'}
                     ),
                 ),
             ]),
