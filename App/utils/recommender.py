@@ -7,15 +7,16 @@ import pandas as pd
 # kd_tree = NearestNeighbors(n_neighbors=30, algorithm='kd_tree').fit(embeddings)
 # joblib.dump(kd_tree, "Data/kd_tree.pkl")
 
+
 class Recommender:
     def __init__(self):
         '''
         Initializes the recommender class
         '''
-        self.kd_tree = joblib.load("utils/data/kd_tree.pkl")
-        self.embeddings = joblib.load("utils/data/embeddings.pkl")
-        self.metadata = pd.read_csv("utils/data/metadata.csv")
-    
+        self.kd_tree = joblib.load("assets/data/kd_tree.pkl")
+        self.embeddings = joblib.load("assets/data/embeddings.pkl")
+        self.metadata = pd.read_csv("assets/data/metadata.csv")
+
     def generate_user_vector(self, songs_liked):
         '''
         Generates a user vector with the songs liked by the user
@@ -43,6 +44,7 @@ class Recommender:
         for i in indices[0][:k]:
             recommendations.append(i)
         return recommendations
+
 
 rec = Recommender()
 print(rec.embeddings.shape)
