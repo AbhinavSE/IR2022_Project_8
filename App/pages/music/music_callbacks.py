@@ -1,4 +1,5 @@
 import re
+from utils.data import getLyricsSearchObject
 from app import app
 import dash
 from dash import html
@@ -42,23 +43,26 @@ def updateLikesCallback(likes, song_ids):
 )
 def paginationCallback(page, text, search_type):
     trigger = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-    music = []
-    print(trigger)
+    music = load_music()
     if (trigger == 'music-search-text' or trigger == 'music-search-type') and text != '':
-        print('Text', text)
-        searchObj = getSearchObject()
-        res = searchObj.searchSong(text)
-        songs = [r[0] for r in res if r[1] == search_type]
-        songs = [searchObj.map[r] for r in songs]
-        music = load_music()
-        music = [music[i] for s in songs for i in s]
-        print(music)
+        if search_type != 'Lyrics':
+            searchObj = getSearchObject()
+            res = searchObj.searchSong(text)
+            songs = [r[0] for r in res if r[1] == search_type]
+            songs = [searchObj.map[r] for r in songs]
+            music = [music[i] for s in songs for i in s]
+        else:
+            searchObj = getLyricsSearchObject()
+            res = searchObj.searchSong(text)
+            songs = res[1]
+            music = [music[s] for s in songs]
+            print(len(music))
+
     else:
         pageSize = 15
         music = load_music()
         page = 0 if page is None else page
         music = [music[i] for i in range(page * pageSize, (page + 1) * pageSize)]
-    print(len(music))
     return getMusicCards(music)
 
 

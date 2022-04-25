@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 import json
+from utils.recommender import Recommender
+from utils.VectorSearch import VectorSearch
 from utils.searchAlgorithm import Search
 from utils.caching import cache, TIMEOUT
 
@@ -11,18 +13,22 @@ def load_music():
     music_df = music_df.fillna('')
     music_df['image_folder'] = music_df['image_folder'].apply(lambda x: 'assets/data' + x if type(x) == str else x)
     music_df['music_folder'] = music_df['music_folder'].apply(lambda x: 'assets/data' + x if type(x) == str else x)
-    # music = [
-    #     {'artist': 'Gym Class Heroes', 'song': 'Stereo Hearts', 'album': 'Stereo Hearts', 'img': 'assets/album_covers/stereo_hearts.jpeg'},
-    #     {'artist': 'Alan Walker', 'song': 'Faded', 'album': 'Faded', 'img': 'assets/album_covers/faded.jpg'},
-    # ]
-    # Repeat the above list to create a list of dictionaries
     return music_df.to_dict('records')
 
 
 @cache.memoize(timeout=TIMEOUT)
+def getRecommender():
+    return Recommender()
+
+
+@cache.memoize(timeout=TIMEOUT)
 def getSearchObject():
-    search = Search()
-    return search
+    return Search()
+
+
+@cache.memoize(timeout=TIMEOUT)
+def getLyricsSearchObject():
+    return VectorSearch()
 
 
 def isSongLiked(songID):

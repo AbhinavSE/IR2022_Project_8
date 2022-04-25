@@ -59,6 +59,7 @@ def search_bar():
                         dbc.Select(id='music-search-type', options=[
                             {'label': 'Title', 'value': 'Title'},
                             {'label': 'Artist', 'value': 'Artist'},
+                            {'label': 'Lyrics', 'value': 'Lyrics'},
                         ], value='Title',
                             style={'background-color': '#1d1d1d', 'color': 'white', 'border': '1px solid black', 'borderRadius': '15px',
                                    'overflow': 'hidden', 'boxShadow': '0px 0px 10px #000000'}),

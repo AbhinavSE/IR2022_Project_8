@@ -3,14 +3,14 @@ import joblib
 import math
 import numpy as np
 import pickle as pkl
-from filter import filter
+from utils.filter import filter
 import warnings
 
 warnings.filterwarnings("ignore")
 
 
 class VectorSearch:
-    BASE = "Vector_Search"
+    BASE = "utils"
 
     def __init__(self) -> None:
         with open(f"{self.BASE}/pickle_files/tf_idf_corpus.pkl", "rb") as f:
@@ -28,7 +28,7 @@ class VectorSearch:
     def cosine(self, x, y) -> float:
         return x @ y / ((np.sum(x**2) ** 0.5) * (np.sum(y**2) ** 0.5))
 
-    def query(self, query: str, k=10) -> list:
+    def searchSong(self, query: str, k=10) -> list:
         query_posting_list = {}
         cleaned_query = filter(query, False)
 
