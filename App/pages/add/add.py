@@ -39,10 +39,12 @@ layout = html.Div([
             )
         ], style={'justifyContent': 'center'}),
         html.Br(),
-        dbc.Button('Add Song', id='add-song-button', color='primary', style={'background-color': '#1d1d1d', 'color': 'white',
-                                                                             'borderRadius': '15px', 'width': '100%'}),
-        html.Br(),
-        dbc.Alert(id='add-song-alert', color='danger', style={'display': 'none'}),
+        dcc.Loading([
+            dbc.Button('Add Song', id='add-song-button', color='primary', style={'background-color': '#1d1d1d', 'color': 'white',
+                                                                                 'borderRadius': '15px', 'width': '100%'}),
+            html.Br(),
+            dbc.Alert(id='add-song-alert', color='danger', style={'display': 'none'}),
+        ])
     ], style={'width': '50%', 'margin': 'auto'}),
     html.Br(),
     html.Br(),

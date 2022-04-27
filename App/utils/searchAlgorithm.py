@@ -8,8 +8,6 @@ import lyricsgenius as lg
 from PIL import Image
 import stagger
 import io
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 class Search:
