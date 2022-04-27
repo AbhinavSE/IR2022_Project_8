@@ -101,7 +101,7 @@ class Search:
 
         return finalResult
 
-    def addSong(self, data):
+    def addSongToDB(self, data):
         # data = (Artist, Title, Folder location)
         title = data[1]
         artist = data[0]

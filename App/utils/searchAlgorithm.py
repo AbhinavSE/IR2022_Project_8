@@ -101,35 +101,35 @@ class Search:
 
         return finalResult
 
-    def addSong(self, data):
+    def addSongToDB(self, data):
         # data = (Artist, Title, Folder location)
         title = data[1]
-        artist = data[0]
+        artistName = data[0]
 
         titles = self.getValues(title)  # Pass in title name
         self.metadata['Title'] = self.metadata['Title'].union(titles)
         self.addGrams(titles)
 
-        artist = self.getValues(artist)  # Pass in artist name
+        artist = self.getValues(artistName)  # Pass in artist name
         self.metadata['Artist'] = self.metadata['Artist'].union(titles)
         self.addGrams(artist)
 
         # Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
-        songMetaData = {'Artist': artist, 'Album': '', 'Title': title, 'Genre': '', 'Comments': '', 'music_folder': data[2]}
+        songMetaData = {'Artist': artistName, 'Album': 'None', 'Title': title, 'Genre': 'None', 'Comments': 'None', 'music_folder': data[2]}
 
         # Getting cover image from the song file
-        mp3 = stagger.read_tag(data[2])
+        mp3 = stagger.read_tag(f'assets/data/{data[2]}')
         if stagger.id3.APIC in mp3:
             by_data = mp3[stagger.id3.APIC][0].data
             im = io.BytesIO(by_data)
             imageFile = Image.open(im)
-            imageFile.save(f'tmp/{title}-cover.jpg')
-            songMetaData['image_folder'] = f'tmp/{title}-cover.jpg'  # Add image location
+            imageFile.save(f'assets/data/image/{title}-cover.jpg')
+            songMetaData['image_folder'] = f'assets/data/image/{title}-cover.jpg'  # Add image location
 
         # Adding it to metadata.csv
         data = pd.read_csv(self.METADATA_LOC)
-        data['Id'] = len(data)
-        data = data.append(data, ignore_index=True)
+        songMetaData['Id'] = len(data)
+        data = data.append(songMetaData, ignore_index=True)
         data.to_csv(self.METADATA_LOC, index=False)
 
         # Getting the lyrics of the songs using genius library and adding it to index

@@ -1,5 +1,6 @@
 import base64
-from curses import raw
+from utils.caching import cache
+from utils.data import getSearchObject
 from app import app
 from dash.dependencies import Input, Output, State
 
@@ -21,8 +22,10 @@ def addSongCallback(n_clicks, title, artist, contents, filename):
             print(title, artist)
             # Save the song in tmp/
             data = contents.encode('utf8').split(b';base64,')[1]
-            with open('tmp/' + filename, 'wb') as f:
+            song_path = 'assets/data/songs/' + filename
+            with open(song_path, 'wb') as f:
                 f.write(base64.b64decode(data))
-            # addSongToDB(title, artist, filename)
+            getSearchObject().addSongToDB([artist, title, f'/songs/{filename}'])
+            cache.clear()
 
     return 'Song added successfully', 'success', {'display': 'block'}
