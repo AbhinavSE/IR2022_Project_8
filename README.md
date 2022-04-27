@@ -8,7 +8,7 @@
 - Keep the folder name to 'songs'
 
 ## How to Run
-    pip install requirements.txt
+    pip install -r requirements.txt
     cd App
     python run.py```
 
