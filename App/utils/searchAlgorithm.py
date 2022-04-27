@@ -4,9 +4,16 @@ import re
 from collections import defaultdict
 from pprint import pprint
 import json
+import lyricsgenius as lg
+from PIL import Image
+import stagger
+import io
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Search:
+
     METADATA_LOC = 'assets/data/metadata.csv'
 
     def __init__(self):
@@ -17,6 +24,7 @@ class Search:
         }
         self.map = defaultdict(list)
         self.initGrams()
+        self.genius = lg.Genius('M18NYItwSvk9kctzrPF1rOlO7YAvFHUpSrepez3VT0FE81uKb8s5-BBkb-HhGHgg', skip_non_songs=True, remove_section_headers=True, excluded_terms=['(Remix)', '(Live)'])
 
     def addGrams(self, wordSet):
         for key in wordSet:
@@ -45,7 +53,7 @@ class Search:
         return valueSet
 
     def initGrams(self):
-        dataset = pd.read_csv(Search.METADATA_LOC)
+        dataset = pd.read_csv(self.METADATA_LOC)
 
         titles = self.getValues(dataset['Title'].values.tolist())
         albums = self.getValues(dataset['Album'].values.tolist())
@@ -60,8 +68,6 @@ class Search:
         self.addGrams(titles)
         self.addGrams(artist)
         self.addGrams(albums)
-
-        pprint(self.grams)
 
     def searchType(self, searchWord):
         r = re.compile('.*' + searchWord)
@@ -95,15 +101,46 @@ class Search:
 
         return finalResult
 
+    def addSong(self, data):
+        # data = (Artist, Title, Folder location)
+        title = data[1]
+        artist = data[0]
+
+        titles = self.getValues(title)  # Pass in title name
+        self.metadata['Title'] = self.metadata['Title'].union(titles)
+        self.addGrams(titles)
+
+        artist = self.getValues(artist)  # Pass in artist name
+        self.metadata['Artist'] = self.metadata['Artist'].union(titles)
+        self.addGrams(artist)
+
+        # Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
+        songMetaData = {'Artist': artist, 'Album': '', 'Title': title, 'Genre': '', 'Comments': '', 'music_folder': data[2]}
+
+        # Getting cover image from the song file
+        mp3 = stagger.read_tag(data[2])
+        if stagger.id3.APIC in mp3:
+            by_data = mp3[stagger.id3.APIC][0].data
+            im = io.BytesIO(by_data)
+            imageFile = Image.open(im)
+            imageFile.save(f'tmp/{title}-cover.jpg')
+            songMetaData['image_folder'] = f'tmp/{title}-cover.jpg'  # Add image location
+
+        # Adding it to metadata.csv
+        data = pd.read_csv(self.METADATA_LOC)
+        data['Id'] = len(data)
+        data = data.append(data, ignore_index=True)
+        data.to_csv(self.METADATA_LOC, index=False)
+
+        # Getting the lyrics of the songs using genius library and adding it to index
+        # try:
+        # 	song = genius.search_song(title, artist)
+        # 	songMetaData.append(song.lyrics)
+        # except Exception as e:
+        #	songMetaData.append('')
+        # 	print(e)
+
 
 if __name__ == '__main__':
     print('Started')
     s = Search()
-    print('Loaded')
-
-    with open('map.json', 'w') as outfile:
-        json.dump(s.map, outfile)
-
-    startTime = time.time()
-    print(s.searchSong('ed '))
-    print(time.time() - startTime)
