@@ -1,6 +1,8 @@
 # IR2022_Project_8
 
-![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/cover.png?raw=true)
+![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/1.png?raw=true)
+![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/2.png?raw=true)
+![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/3.png?raw=true)
 
 ## Steps to add dataset
 - Download songs folder from this [link](https://drive.google.com/drive/folders/1lXHVGBgL0FvHOf4Ao_TrrSPdvhRq-iwq?usp=sharing)
