@@ -14,6 +14,11 @@
 
 - App should be up at ```http://127.0.0.1:8050```
 
+## Recommendation system algorithm
+
+![Recommendation model](https://user-images.githubusercontent.com/43900817/165585306-3600b900-fcb5-4700-9ed1-d911e9b5bf64.png)
+
+Each song is converted into a feature vector using a CNN model, which is then passed into a KD-Tree to retrieve the best possible recommendation
 
 ## How to Use
 
