@@ -56,12 +56,15 @@ class VectorSearch:
             cosine_sim[i] = {}
             cosine_sim[i][0] = self.cosine(query_vector[0][0], self.corpus_matrix[i][0])
 
-        tf_ranking = sorted(cosine_sim.items(), key=lambda x: x[1][0], reverse=True)[:k]
-
-        query_result = []
+        tf_ranking = sorted(cosine_sim.items(), key=lambda x: x[1][0], reverse=True)
         df_index = []
         for doc_id, cosine_rank in tf_ranking:
             query_result.append((self.data.loc[doc_id]["Title"], cosine_rank[0]))
             df_index.append(doc_id)
 
         return query_result, df_index
+
+vs = VectorSearch()[:k]
+
+        query_result = []
+print(vs.query('In love with the shape of you'))
