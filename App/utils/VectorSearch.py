@@ -1,3 +1,4 @@
+
 import pandas as pd
 import joblib
 import math
@@ -124,7 +125,7 @@ class VectorSearch:
             compress=5,
         )
 
-    def add_song_indexing(self, lyrics: str) -> str:
+    def add_song_indexing(self, lyrics: str, title: str) -> str:
         pkl.dump(self.vocab, open(f"{self.BASE}/pickle_files/prev_vocab.pkl", "wb"))
         joblib.dump(
             self.corpus_matrix,
@@ -142,7 +143,7 @@ class VectorSearch:
         self.data.loc[len(self.data.index)] = [
             "Artist",
             "None",
-            "Title" + str(lyrics[: min(len(lyrics), 5)]),
+            title,
             "None",
             lyrics,
             cleaned_query,
@@ -155,7 +156,7 @@ class VectorSearch:
             return "Failed to add to the corpus"
         return "Successfully added to the corpus"
 
-    def searchSong(self, query: str, k=10) -> list:
+    def query(self, query: str, k=10) -> list:
 
         query_vector = self.create_vector(query, False)
         cosine_sim = {}

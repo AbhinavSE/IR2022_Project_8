@@ -122,7 +122,7 @@ class Search:
             im = io.BytesIO(by_data)
             imageFile = Image.open(im)
             imageFile.save(f'assets/data/image/{title}-cover.jpg')
-            songMetaData['image_folder'] = f'assets/data/image/{title}-cover.jpg'  # Add image location
+            songMetaData['image_folder'] = f'/image/{title}-cover.jpg'  # Add image location
 
         # Adding it to metadata.csv
         data = pd.read_csv(self.METADATA_LOC)
@@ -133,7 +133,7 @@ class Search:
         # Getting the lyrics of the songs using genius library and adding it to index
         try:
             song = self.genius.search_song(title, artistName)
-            lyricSearch.add_song_indexing(song.lyrics)
+            lyricSearch.add_song_indexing(song.lyrics, title)
         except Exception as e:
             print('Lyrics not found')
 

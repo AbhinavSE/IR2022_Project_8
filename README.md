@@ -7,7 +7,7 @@
 - Add the songs folder to Data folder
 
 ## How to Run
-- ```pip install requirements.txt
+    pip install requirements.txt
     cd App
     python run.py```
 
