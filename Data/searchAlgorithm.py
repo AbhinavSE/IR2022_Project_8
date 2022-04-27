@@ -98,33 +98,32 @@ class Search:
 		return finalResult
 
 	def addSong(self, data):
-
-		titles = self.getValues()	# Pass in title name
+		# data = (Artist, Title, Folder location)
+		
+		titles = self.getValues(data[1])	# Pass in title name
 		self.metadata['Title'] = self.metadata['Title'].union(titles)
 		self.addGrams(titles)
 
-		artist = self.getValues()	# Pass in artist name
+		artist = self.getValues(data[0])	# Pass in artist name
 		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
-		self.addGrams(albums)
-
-		albums = self.getValues()	# Pass in album name
-		self.metadata['Album'] = self.metadata['Album'].union(titles)
 		self.addGrams(artist)
 
-
-		songMetaData = []	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
+		songMetaData = {'Artist': data[0], 'Album': '', 'Title': data[1], 'Genre': '', 'Comments': '', 'music_folder': data[2]}	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
 
 		# Getting cover image from the song file
-		# mp3 = stagger.read_tag('songs/' + fileName)		
-		# if stagger.id3.APIC in mp3:
-		# 	by_data = mp3[stagger.id3.APIC][0].data
-		# 	im = io.BytesIO(by_data)
-		# 	imageFile = Image.open(im)
-		# 	imageFile.save(f'{imgFile}-{counter}.jpg')
-		#	songMetaData.append()	# Add image location
-		# else:
-		# 	songMetaData.append('')
+		mp3 = stagger.read_tag(data[2])		
+		if stagger.id3.APIC in mp3:
+			by_data = mp3[stagger.id3.APIC][0].data
+			im = io.BytesIO(by_data)
+			imageFile = Image.open(im)
+			imageFile.save(f'tmp/{title}-cover.jpg')
+			songMetaData['image_folder'] = f'tmp/{title}-cover.jpg'	# Add image location
 
+		# Adding it to metadata.csv
+		data = pd.read_csv('assets/data/metadata.csv')
+		data['Id'] = len(data)
+		data = data.append(data, ignore_index = True)
+		data.to_csv('assets/data/metadata.csv', index = False)
 
 		# Getting the lyrics of the songs using genius library and adding it to index
 		# try:
