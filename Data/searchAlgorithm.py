@@ -5,6 +5,7 @@ import re
 from collections import defaultdict
 from pprint import pprint
 import json
+import lyricsgenius as lg
 
 class Search:
 
@@ -16,7 +17,7 @@ class Search:
 		}
 		self.map = defaultdict(list)
 		self.initGrams()
-
+		self.genius = lg.Genius('M18NYItwSvk9kctzrPF1rOlO7YAvFHUpSrepez3VT0FE81uKb8s5-BBkb-HhGHgg', skip_non_songs = True, remove_section_headers = True, excluded_terms = ['(Remix)', '(Live)'])
 		
 
 	def addGrams(self, wordSet):
@@ -98,17 +99,40 @@ class Search:
 
 	def addSong(self, data):
 
-		titles = self.getValues()
-		albums = self.getValues()
-		artist = self.getValues()
-
+		titles = self.getValues()	# Pass in title name
 		self.metadata['Title'] = self.metadata['Title'].union(titles)
-		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
-		self.metadata['Album'] = self.metadata['Album'].union(titles)
-
 		self.addGrams(titles)
+
+		artist = self.getValues()	# Pass in artist name
+		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
 		self.addGrams(albums)
+
+		albums = self.getValues()	# Pass in album name
+		self.metadata['Album'] = self.metadata['Album'].union(titles)
 		self.addGrams(artist)
+
+
+		songMetaData = []	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
+
+		# Getting cover image from the song file
+		# mp3 = stagger.read_tag('songs/' + fileName)		
+		# if stagger.id3.APIC in mp3:
+		# 	by_data = mp3[stagger.id3.APIC][0].data
+		# 	im = io.BytesIO(by_data)
+		# 	imageFile = Image.open(im)
+		# 	imageFile.save(f'{imgFile}-{counter}.jpg')
+		#	songMetaData.append()	# Add image location
+		# else:
+		# 	songMetaData.append('')
+
+
+		# Getting the lyrics of the songs using genius library and adding it to index
+		# try:
+		# 	song = genius.search_song(title, artist)
+		# 	songMetaData.append(song.lyrics)
+		# except Exception as e:
+		#	songMetaData.append('')
+		# 	print(e)
 
 if __name__ == '__main__':	
 	print('Started')

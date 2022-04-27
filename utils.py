@@ -16,7 +16,7 @@ from keras.models import Sequential
 from keras.models import Model
 from keras.layers import *
 import pandas as pd
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 import pathlib
 import io
 from six.moves.urllib.request import urlopen
@@ -121,12 +121,9 @@ def get_embeddings(url, online=False):
 metadata = pd.read_csv("Data/metadata.csv")
 embeddings = []
 errors = 0
-for path in tqdm(metadata["music_folder"]):
-    try:
-        embeddings.append(get_embeddings("Data"+path))
-    except Exception as e:
-        errors += 1
-        embeddings.append(np.zeros(128))
+for path in tqdm(metadata["music_folder"]):    
+    embedding = joblib.load("Data/embeddings/"+path.split("/")[-1].replace("'","_").replace("&", "_")+".pkl")
+    embeddings.append(embedding)
 
 embeddings = np.array(embeddings)
 joblib.dump(embeddings, "Data/embeddings.pkl")

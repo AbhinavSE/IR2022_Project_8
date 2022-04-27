@@ -10,17 +10,19 @@ warnings.filterwarnings("ignore")
 
 
 class VectorSearch:
+    BASE = "Vector_Search"
+
     def __init__(self) -> None:
-        with open("pickle_files/tf_idf_corpus.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/tf_idf_corpus.pkl", "rb") as f:
             self.corpus_matrix = joblib.load(f)
 
-        with open("pickle_files/data.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/data.pkl", "rb") as f:
             self.data = pkl.load(f)
 
-        with open("pickle_files/vocab.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/vocab.pkl", "rb") as f:
             self.vocab = pkl.load(f)
 
-        with open("pickle_files/idf.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/idf.pkl", "rb") as f:
             self.idf = pkl.load(f)
 
     def cosine(self, x, y) -> float:
