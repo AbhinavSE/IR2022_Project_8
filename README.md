@@ -1,4 +1,4 @@
-# IR2022_Project_8
+# RECOM
 
 ![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/github_imgs/1.png?raw=true)
 
