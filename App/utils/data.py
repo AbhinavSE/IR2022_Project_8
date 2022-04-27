@@ -44,11 +44,9 @@ def isSongLiked(songID):
 def getLikes():
     with open('tmp/likes.json') as f:
         likes = json.load(f)
-        print('Got', likes)
         return likes
 
 
 def setLikes(likes):
-    print('Setting', likes)
     with open('tmp/likes.json', 'w') as f:
         json.dump(likes, f)

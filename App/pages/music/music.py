@@ -1,11 +1,12 @@
 from dash import html, dcc
+from components.carousel import get_carousel
 from utils.constants import *
 import dash_bootstrap_components as dbc
-from pages.music.music_helper import get_recommended_songs_carousel, search_bar
+from pages.music.music_helper import search_bar
 from pages.music.music_callbacks import *
 
 layout = html.Div([
-    get_recommended_songs_carousel(),
+    get_carousel(),
     html.Br(),
     html.Br(),
     html.Div(

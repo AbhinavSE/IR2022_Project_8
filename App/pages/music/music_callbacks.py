@@ -4,7 +4,7 @@ from app import app
 import dash
 from dash import html
 from dash.dependencies import Input, Output, State
-from pages.music.music_helper import getMusicCards
+from pages.music.music_helper import getMusicCards, getRecommenedSongs
 from utils.data import getLikes, load_music, setLikes, getSearchObject
 
 # Like button callbacks
@@ -90,3 +90,17 @@ def playMusicCallback(likes, song_ids):
     artist = music[song_id]['Artist']
     cover = music[song_id]['image_folder']
     return [audio, title, artist, cover]
+
+
+@app.callback(
+    output=Output('music-carousel', 'items'),
+    inputs=dict(likes=[Input(f'music-card-{i}-like-btn', 'n_clicks') for i in range(15)]),
+)
+def recommendedSongsCarouselCallback(likes):
+    """
+    Carousel for the recommended songs.
+    """
+    items = getRecommenedSongs()
+    for i in range(len(items)):
+        items[i]['key'] = i + 1
+    return items

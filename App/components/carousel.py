@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 
 
-def get_carousel(items):
+def get_carousel():
     """
     items: contains a list of dicts with the following keys:
         - src: the image source
@@ -9,14 +9,11 @@ def get_carousel(items):
         - caption: the caption text
     """
 
-    for i in range(len(items)):
-        items[i]['key'] = i + 1
-    # adjust size with black bars on the sides with 50% of the width
-
     return dbc.Row([
         dbc.Col(
             dbc.Carousel(
-                items=items,
+                id='music-carousel',
+                items=[],
                 variant="dark",
                 indicators=True,
                 controls=True,

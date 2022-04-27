@@ -4,20 +4,22 @@ from dash import html
 from dash.dependencies import Input, Output, State
 from components.carousel import get_carousel
 import dash_bootstrap_components as dbc
-from utils.data import load_music
+from utils.data import load_music, getLikes, getRecommender
 from components.cards import get_music_card
 
 
-def get_recommended_songs_carousel():
-    def recommended_songs():
-        music = load_music()
-        items = []
-        for song in music:
-            items.append({'src': song['image_folder'], 'title': song['Title'], 'artist': song['Artist']})
-        return items
-
-    items = recommended_songs()
-    return get_carousel(items)
+def getRecommenedSongs():
+    music = load_music()
+    songs_liked = list(getLikes().keys())
+    songs_liked = [int(s) for s in songs_liked]
+    print(songs_liked)
+    rec = getRecommender()
+    user_vector = rec.generate_user_vector(songs_liked)
+    recommendations = rec.get_recommendations(user_vector)
+    items = []
+    for s_id in recommendations:
+        items.append({'src': music[s_id]['image_folder'], 'title': music[s_id]['Title'], 'artist': music[s_id]['Artist']})
+    return items
 
 
 def getMusicCards(music):
