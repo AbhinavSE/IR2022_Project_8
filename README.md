@@ -4,7 +4,8 @@
 
 ## Steps to add dataset
 - Download songs folder from this [link](https://drive.google.com/drive/folders/1nD8FhFiKG4JsBPDfN0UQigbu5NJz6yW2?usp=sharing)
-- Add the songs folder to Data folder
+- Add the songs folder to Apps/Assets/Data folder
+- Keep the folder name to 'songs'
 
 ## How to Run
     pip install requirements.txt
