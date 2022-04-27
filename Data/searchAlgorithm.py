@@ -104,18 +104,18 @@ class Search:
 
 	def addSong(self, data):
 		# data = (Artist, Title, Folder location)
-		title = data[1]
-		artist = data[0]
+		titleName = data[1]
+		artistName = data[0]
 
-		titles = self.getValues(title)	# Pass in title name
+		titles = self.getValues(titleName)	# Pass in title name
 		self.metadata['Title'] = self.metadata['Title'].union(titles)
 		self.addGrams(titles)
 
-		artist = self.getValues(artist)	# Pass in artist name
+		artist = self.getValues(artistName)	# Pass in artist name
 		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
 		self.addGrams(artist)
 
-		songMetaData = {'Artist': artist, 'Album': '', 'Title': title, 'Genre': '', 'Comments': '', 'music_folder': data[2]}	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
+		songMetaData = {'Artist': artistName, 'Album': 'None', 'Title': titleName, 'Genre': 'None', 'Comments': 'None', 'music_folder': data[2]}	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
 
 		# Getting cover image from the song file
 		mp3 = stagger.read_tag(data[2])		
@@ -123,14 +123,14 @@ class Search:
 			by_data = mp3[stagger.id3.APIC][0].data
 			im = io.BytesIO(by_data)
 			imageFile = Image.open(im)
-			imageFile.save(f'tmp/{title}-cover.jpg')
-			songMetaData['image_folder'] = f'tmp/{title}-cover.jpg'	# Add image location
+			imageFile.save(f'images/{title}-cover.jpg')
+			songMetaData['image_folder'] = f'images/{title}-cover.jpg'	# Add image location
 
 		# Adding it to metadata.csv
-		data = pd.read_csv('assets/data/metadata.csv')
-		data['Id'] = len(data)
-		data = data.append(data, ignore_index = True)
-		data.to_csv('assets/data/metadata.csv', index = False)
+		data = pd.read_csv('metadata.csv')
+		songMetaData['Id'] = len(data)
+		data = data.append(songMetaData, ignore_index = True)
+		data.to_csv('metadata.csv', index = False)
 
 		# Getting the lyrics of the songs using genius library and adding it to index
 		# try:
@@ -151,3 +151,5 @@ if __name__ == '__main__':
 	startTime = time.time()
 	print(s.searchSong('ed '))
 	print(time.time() - startTime)
+
+	s.addSong(('Frank Sinatra', 'Come Fly With Me', 'songs/01 - Come Fly With Me.mp3'))
