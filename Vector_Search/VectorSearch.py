@@ -13,16 +13,16 @@ class VectorSearch:
     BASE = "Vector_Search"
 
     def __init__(self) -> None:
-        with open(f"./pickle_files/tf_idf_corpus.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/tf_idf_corpus.pkl", "rb") as f:
             self.corpus_matrix = joblib.load(f)
 
-        with open(f"./pickle_files/data.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/data.pkl", "rb") as f:
             self.data = pkl.load(f)
 
-        with open(f"./pickle_files/vocab.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/vocab.pkl", "rb") as f:
             self.vocab = pkl.load(f)
 
-        with open(f"./pickle_files/idf.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/idf.pkl", "rb") as f:
             self.idf = pkl.load(f)
 
     def cosine(self, x, y) -> float:
@@ -54,26 +54,26 @@ class VectorSearch:
         return query_vector
 
     def undo_addtion(self) -> str:
-        with open(f"./pickle_files/prev_tf_idf_corpus.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/prev_tf_idf_corpus.pkl", "rb") as f:
             self.corpus_matrix = joblib.load(f)
 
-        with open(f"./pickle_files/prev_data.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/prev_data.pkl", "rb") as f:
             self.data = pkl.load(f)
 
-        with open(f"./pickle_files/prev_vocab.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/prev_vocab.pkl", "rb") as f:
             self.vocab = pkl.load(f)
 
-        with open(f"./pickle_files/prev_idf.pkl", "rb") as f:
+        with open(f"{self.BASE}/pickle_files/prev_idf.pkl", "rb") as f:
             self.idf = pkl.load(f)
 
-        pkl.dump(self.idf, open(f"./pickle_files/idf.pkl", "wb"))
+        pkl.dump(self.idf, open(f"{self.BASE}/pickle_files/idf.pkl", "wb"))
         joblib.dump(
             self.corpus_matrix,
-            open(f"./pickle_files/tf_idf_corpus.pkl", "wb"),
+            open(f"{self.BASE}/pickle_files/tf_idf_corpus.pkl", "wb"),
             compress=5,
         )
-        pkl.dump(self.vocab, open(f"./pickle_files/vocab.pkl", "wb"))
-        pkl.dump(self.data, open(f"./pickle_files/data.pkl", "wb"))
+        pkl.dump(self.vocab, open(f"{self.BASE}/pickle_files/vocab.pkl", "wb"))
+        pkl.dump(self.data, open(f"{self.BASE}/pickle_files/data.pkl", "wb"))
 
         return "undo successful"
 
@@ -102,7 +102,7 @@ class VectorSearch:
             idf[word] = math.log(total_documents / len(nested_posting_list[word]) + 1)
 
         self.idf = idf
-        pkl.dump(self.idf, open(f"./pickle_files/idf.pkl", "wb"))
+        pkl.dump(self.idf, open(f"{self.BASE}/pickle_files/idf.pkl", "wb"))
 
         corpus_matrix = np.zeros((total_documents, 1, len(self.vocab)))
 
@@ -120,24 +120,24 @@ class VectorSearch:
         self.corpus_matrix = corpus_matrix
         joblib.dump(
             self.corpus_matrix,
-            open(f"./pickle_files/tf_idf_corpus.pkl", "wb"),
+            open(f"{self.BASE}/pickle_files/tf_idf_corpus.pkl", "wb"),
             compress=5,
         )
 
     def add_song_indexing(self, lyrics: str) -> str:
-        pkl.dump(self.vocab, open(f"./pickle_files/prev_vocab.pkl", "wb"))
+        pkl.dump(self.vocab, open(f"{self.BASE}/pickle_files/prev_vocab.pkl", "wb"))
         joblib.dump(
             self.corpus_matrix,
-            open(f"./pickle_files/prev_tf_idf_corpus.pkl", "wb"),
+            open(f"{self.BASE}/pickle_files/prev_tf_idf_corpus.pkl", "wb"),
             compress=5,
         )
-        pkl.dump(self.idf, open(f"./pickle_files/prev_idf.pkl", "wb"))
-        pkl.dump(self.data, open(f"./pickle_files/prev_data.pkl", "wb"))
+        pkl.dump(self.idf, open(f"{self.BASE}/pickle_files/prev_idf.pkl", "wb"))
+        pkl.dump(self.data, open(f"{self.BASE}/pickle_files/prev_data.pkl", "wb"))
 
         cleaned_query = filter(lyrics, True)
 
         self.vocab = list(set(self.vocab).union(fil_vocab))
-        pkl.dump(self.vocab, open(f"./pickle_files/vocab.pkl", "wb"))
+        pkl.dump(self.vocab, open(f"{self.BASE}/pickle_files/vocab.pkl", "wb"))
 
         self.data.loc[len(self.data.index)] = [
             "Artist",
@@ -147,7 +147,7 @@ class VectorSearch:
             lyrics,
             cleaned_query,
         ]
-        pkl.dump(self.data, open(f"./pickle_files/data.pkl", "wb"))
+        pkl.dump(self.data, open(f"{self.BASE}/pickle_files/data.pkl", "wb"))
 
         try:
             self.posting_list()
