@@ -26,7 +26,8 @@ class Recommender:
         output:
             user_vector: numpy array of the user's embedding
         '''
-        user_vector = np.mean(self.embeddings[songs_liked], axis=0)
+        corrected_songs_liked = [song for song in songs_liked if song < len(self.embeddings)]
+        user_vector = np.mean(self.embeddings[corrected_songs_liked], axis=0)
         return user_vector
 
     def get_recommendations(self, user_vector, k=10):
@@ -48,9 +49,9 @@ class Recommender:
 
 rec = Recommender()
 print(rec.embeddings.shape)
-# songs_liked = [0, 1, 2]
-# print("generating user vector...")
-# user_vector = rec.generate_user_vector(songs_liked)
-# print("getting recommendations...")
-# recommendations = rec.get_recommendations(user_vector)
-# print(recommendations)
+songs_liked = [0, 1, 2, 1000]
+print("generating user vector...")
+user_vector = rec.generate_user_vector(songs_liked)
+print("getting recommendations...")
+recommendations = rec.get_recommendations(user_vector)
+print(recommendations)

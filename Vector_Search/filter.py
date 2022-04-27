@@ -136,7 +136,7 @@ def filter(item, b):
         item = re.sub(r"\\N", "", item)
         item = remove_emoji(item)
         item = remove_links(item)
-        # item = stopword(item)
+        item = stopword(item)
         item = stemming(item)
         item = word_tokenize(item)
         item = Counter(item)
