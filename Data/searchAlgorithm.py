@@ -6,6 +6,11 @@ from collections import defaultdict
 from pprint import pprint
 import json
 import lyricsgenius as lg
+from PIL import Image
+import stagger
+import io
+import numpy as np
+import matplotlib.pyplot as plt
 
 class Search:
 
@@ -99,7 +104,7 @@ class Search:
 
 	def addSong(self, data):
 		# data = (Artist, Title, Folder location)
-		
+
 		titles = self.getValues(data[1])	# Pass in title name
 		self.metadata['Title'] = self.metadata['Title'].union(titles)
 		self.addGrams(titles)
