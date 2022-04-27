@@ -104,16 +104,18 @@ class Search:
 
 	def addSong(self, data):
 		# data = (Artist, Title, Folder location)
+		title = data[1]
+		artist = data[0]
 
-		titles = self.getValues(data[1])	# Pass in title name
+		titles = self.getValues(title)	# Pass in title name
 		self.metadata['Title'] = self.metadata['Title'].union(titles)
 		self.addGrams(titles)
 
-		artist = self.getValues(data[0])	# Pass in artist name
+		artist = self.getValues(artist)	# Pass in artist name
 		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
 		self.addGrams(artist)
 
-		songMetaData = {'Artist': data[0], 'Album': '', 'Title': data[1], 'Genre': '', 'Comments': '', 'music_folder': data[2]}	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
+		songMetaData = {'Artist': artist, 'Album': '', 'Title': title, 'Genre': '', 'Comments': '', 'music_folder': data[2]}	# Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
 
 		# Getting cover image from the song file
 		mp3 = stagger.read_tag(data[2])		
