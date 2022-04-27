@@ -25,7 +25,7 @@ layout = html.Div([
     # Pagination
     html.Div([
         # center
-        dbc.Pagination(id='music-pagination', max_value=24, fully_expanded=False),
+        dbc.Pagination(id='music-pagination', active_page=1, max_value=24, fully_expanded=False),
     ], style={'width': '20%', 'margin': 'auto', 'height': '50px'},
     ),
     html.Br(),
