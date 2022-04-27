@@ -5,6 +5,7 @@ from app import app
 from utils.constants import PATHS
 from pages.music import music
 from pages.about import about
+from pages.add import add
 
 
 @app.callback(
@@ -14,6 +15,8 @@ from pages.about import about
 def render_page_content(pathname):
     if pathname == PATHS['music']:
         return music.layout
+    elif pathname == PATHS['add']:
+        return add.layout
     elif pathname == PATHS['about']:
         return about.layout
 

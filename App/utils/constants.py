@@ -1,6 +1,7 @@
 PATHS = {
     'music': '/',
     'about': '/about',
+    'add': '/add',
 }
 
 SIDEBAR_STYLE = {

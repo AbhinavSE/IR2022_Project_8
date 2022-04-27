@@ -7,8 +7,8 @@ navbar = dbc.NavbarSimple(
     className='sticky-top',
     children=[
         dbc.NavItem(dbc.NavLink("Music", href=PATHS['music'])),
+        dbc.NavItem(dbc.NavLink("Add", href=PATHS['add'])),
         dbc.NavItem(dbc.NavLink("About", href=PATHS['about'])),
-        dbc.NavItem(dbc.NavLink("Contact", href='#')),
         # Logged in
         dbc.NavItem(dbc.NavLink("Logout", href='#')),
     ],
