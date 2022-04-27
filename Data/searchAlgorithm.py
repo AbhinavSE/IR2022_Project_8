@@ -149,9 +149,3 @@ if __name__ == '__main__':
 	startTime = time.time()
 	print(s.searchSong('ed '))
 	print(time.time() - startTime)
-
-
-
-
-
-
