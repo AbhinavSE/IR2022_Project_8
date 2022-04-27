@@ -62,7 +62,6 @@ class Search:
 		self.addGrams(artist)
 		self.addGrams(albums)
 
-		pprint(self.grams)
 
 	def searchType(self, searchWord):
 		r = re.compile('.*' + searchWord)
@@ -96,6 +95,20 @@ class Search:
 					break
 
 		return finalResult
+
+	def addSong(self, data):
+
+		titles = self.getValues()
+		albums = self.getValues()
+		artist = self.getValues()
+
+		self.metadata['Title'] = self.metadata['Title'].union(titles)
+		self.metadata['Artist'] = self.metadata['Artist'].union(titles)
+		self.metadata['Album'] = self.metadata['Album'].union(titles)
+
+		self.addGrams(titles)
+		self.addGrams(albums)
+		self.addGrams(artist)
 
 if __name__ == '__main__':	
 	print('Started')
