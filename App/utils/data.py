@@ -13,6 +13,7 @@ def load_music():
     music_df = music_df.fillna('')
     music_df['image_folder'] = music_df['image_folder'].apply(lambda x: 'assets/data' + x if type(x) == str else x)
     music_df['music_folder'] = music_df['music_folder'].apply(lambda x: 'assets/data' + x if type(x) == str else x)
+    music_df.fillna('None', inplace=True)
     return music_df.to_dict('records')
 
 

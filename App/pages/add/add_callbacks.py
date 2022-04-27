@@ -1,4 +1,5 @@
 import base64
+from utils.data import getLyricsSearchObject
 from utils.caching import cache
 from utils.data import getSearchObject
 from app import app
@@ -25,7 +26,7 @@ def addSongCallback(n_clicks, title, artist, contents, filename):
             song_path = 'assets/data/songs/' + filename
             with open(song_path, 'wb') as f:
                 f.write(base64.b64decode(data))
-            getSearchObject().addSongToDB([artist, title, f'/songs/{filename}'])
+            getSearchObject().addSongToDB([artist, title, f'/songs/{filename}'], getLyricsSearchObject())
             cache.clear()
 
     return 'Song added successfully', 'success', {'display': 'block'}

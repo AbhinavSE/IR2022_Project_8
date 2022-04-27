@@ -101,7 +101,7 @@ class Search:
 
         return finalResult
 
-    def addSongToDB(self, data):
+    def addSongToDB(self, data, lyricSearch):
         # data = (Artist, Title, Folder location)
         title = data[1]
         artistName = data[0]
@@ -118,7 +118,7 @@ class Search:
         songMetaData = {'Artist': artistName, 'Album': 'None', 'Title': title, 'Genre': 'None', 'Comments': 'None', 'music_folder': data[2]}
 
         # Getting cover image from the song file
-        mp3 = stagger.read_tag(f'assets/data/{data[2]}')
+        mp3 = stagger.read_tag(f'assets/data{data[2]}')
         if stagger.id3.APIC in mp3:
             by_data = mp3[stagger.id3.APIC][0].data
             im = io.BytesIO(by_data)
@@ -133,14 +133,21 @@ class Search:
         data.to_csv(self.METADATA_LOC, index=False)
 
         # Getting the lyrics of the songs using genius library and adding it to index
-        # try:
-        # 	song = genius.search_song(title, artist)
-        # 	songMetaData.append(song.lyrics)
-        # except Exception as e:
-        #	songMetaData.append('')
-        # 	print(e)
+        try:
+            song = self.genius.search_song(title, artistName)
+            lyricSearch.add_song_indexing(song.lyrics)
+        except Exception as e:
+            print('Lyrics not found')
 
 
 if __name__ == '__main__':
     print('Started')
     s = Search()
+    print('Loaded')
+
+    with open('map.json', 'w') as outfile:
+        json.dump(s.map, outfile)
+
+    startTime = time.time()
+    print(s.searchSong('ed '))
+    print(time.time() - startTime)

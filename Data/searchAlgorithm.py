@@ -115,7 +115,7 @@ class Search:
         self.addGrams(artist)
 
         # Initialize song meta data with Artist, Album, Title, Genre, Comments, Music folder, Image Folder
-        songMetaData = {'Artist': artistName, 'Album': '', 'Title': title, 'Genre': '', 'Comments': '', 'music_folder': data[2]}
+        songMetaData = {'Artist': artistName, 'Album': 'None', 'Title': title, 'Genre': 'None', 'Comments': 'None', 'music_folder': data[2]}
 
         # Getting cover image from the song file
         mp3 = stagger.read_tag(data[2])
@@ -129,15 +129,15 @@ class Search:
         # Adding it to metadata.csv
         data = pd.read_csv(self.METADATA_LOC)
         songMetaData['Id'] = len(data)
-        data = data.append(data, ignore_index=True)
+        data = data.append(songMetaData, ignore_index=True)
         data.to_csv(self.METADATA_LOC, index=False)
 
         # Getting the lyrics of the songs using genius library and adding it to index
         try:
-        	song = genius.search_song(title, artistName)
-        	lyricSearch.add_song_indexing(song.lyrics)
+            song = self.genius.search_song(title, artistName)
+            lyricSearch.add_song_indexing(song.lyrics)
         except Exception as e:
-        	print('Lyrics not found')
+            print('Lyrics not found')
 
 
 if __name__ == '__main__':
@@ -151,4 +151,3 @@ if __name__ == '__main__':
     startTime = time.time()
     print(s.searchSong('ed '))
     print(time.time() - startTime)
->>>>>>> 2a2800d95095e33d6b05b3834d78678a73cf504d

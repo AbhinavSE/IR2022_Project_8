@@ -47,11 +47,12 @@ class Recommender:
         return recommendations
 
 
-rec = Recommender()
-print(rec.embeddings.shape)
-songs_liked = [0, 1, 2, 1000]
-print("generating user vector...")
-user_vector = rec.generate_user_vector(songs_liked)
-print("getting recommendations...")
-recommendations = rec.get_recommendations(user_vector)
-print(recommendations)
+if __name__ == "__main__":
+    rec = Recommender()
+    print(rec.embeddings.shape)
+    songs_liked = [0, 1, 2, 1000]
+    print("generating user vector...")
+    user_vector = rec.generate_user_vector(songs_liked)
+    print("getting recommendations...")
+    recommendations = rec.get_recommendations(user_vector)
+    print(recommendations)
