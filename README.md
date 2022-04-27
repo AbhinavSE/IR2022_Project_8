@@ -7,7 +7,8 @@
 - Add the songs folder to Data folder
 
 ## How to Run
-- ```pip install requirements.txt```
-- ```cd App```
-- ```python run.py```
+- ```pip install requirements.txt
+    cd App
+    python run.py```
+
 - App should be up at ```http://127.0.0.1:8050```
