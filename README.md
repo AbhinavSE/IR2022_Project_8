@@ -3,3 +3,8 @@
 ## Steps to add dataset
 - Download songs folder from this [link](https://drive.google.com/drive/folders/1nD8FhFiKG4JsBPDfN0UQigbu5NJz6yW2?usp=sharing)
 - Add the songs folder to Data folder
+
+## How to Run
+- ```pip install requirements.txt```
+- ```cd App```
+- ```python run.py```
