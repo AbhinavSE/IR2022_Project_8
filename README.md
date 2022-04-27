@@ -1,6 +1,6 @@
 # IR2022_Project_8
 
-![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/1.png?raw=true)
+![alt text](https://github.com/AbhinavSE/IR2022_Project_8/blob/master/App/assets/github_imgs/1.png?raw=true)
 
 ## Steps to add dataset
 - Download songs folder from this [link](https://drive.google.com/drive/folders/1lXHVGBgL0FvHOf4Ao_TrrSPdvhRq-iwq?usp=sharing)
@@ -13,6 +13,7 @@
     python run.py```
 
 - App should be up at ```http://127.0.0.1:8050```
+
 
 ## How to Use
 
